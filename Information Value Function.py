@@ -1,8 +1,8 @@
-def information_value(df,column,target):
+import numpy as np
+import pandas as pd
+import math
 
-    #Number of bins you want to split your distribution into
-    number_of_bins = 5
-
+def information_value(df,column,target,bins):
     #Initial setting of IV to 0 to be summed
     IV = 0
 
@@ -16,10 +16,10 @@ def information_value(df,column,target):
 
     #Break the column up into equal parts of 5% intervals
     lower_boundary = df[column].min()
-    for bin_number in range(number_of_bins):
+    for bin_number in range(bins):
 
         #Calculation of the boundaries
-        upper_boundary = np.percentile(df[column], (bin_number+1)*(100/number_of_bins))
+        upper_boundary = np.percentile(df[column], (bin_number+1)*(100/bins))
 
         if upper_boundary != lower_boundary:
 
@@ -48,3 +48,11 @@ def information_value(df,column,target):
             IV_multiplier = IV_multiplier + 1
 
     return IV
+
+
+
+
+df = pd.read_csv("train.csv",index_col='PassengerId')
+IV = information_value(df=df,column='Fare',target='Survived',bins=20)
+
+print(IV)

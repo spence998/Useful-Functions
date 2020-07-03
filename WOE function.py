@@ -3,9 +3,8 @@ import pandas as pd
 import math
 import matplotlib.pyplot as plt
 
-def information_value(df,column,target):
-    #Number of bins you want to split your distribution into
-    number_of_bins = 20
+def information_value(df,column,target,bins):
+
     
     #Initial setting of IV to 0 to be summed
     IV = 0
@@ -15,13 +14,15 @@ def information_value(df,column,target):
     total_bads = df.loc[df[target] == 1].shape[0]
 
     #Break the column up into equal parts of 5% intervals
+    barchart_x_boundaries = []
+    barchart_y_values = []
     lower_boundary = df[column].min()
     barchart_x_boundaries.append(lower_boundary)
     
-    for bin_number in range(number_of_bins):     
+    for bin_number in range(bins):     
 
         #Calculation of the boundaries
-        upper_boundary = np.percentile(df[column], (bin_number+1)*(100/number_of_bins))
+        upper_boundary = np.percentile(df[column], (bin_number+1)*(100/bins))
 
         if upper_boundary != lower_boundary:
             #Sum of non-targets in the boundary
@@ -45,11 +46,11 @@ def information_value(df,column,target):
     return barchart_y_values,barchart_x_boundaries
 
 
-folder_location = "c:\\Users\\"
-df = pd.read_csv(folder_location + "", index_col = "")
+
+df = pd.read_csv("train.csv",index_col='PassengerId')
 
 
-barchart_y_values,barchart_x_boundaries = information_value(df=,column=,target=)
+barchart_y_values,barchart_x_boundaries = information_value(df=df,column='Fare',target='Survived',bins=20)
 print('barchart_y_values')
 print(barchart_y_values)
 
