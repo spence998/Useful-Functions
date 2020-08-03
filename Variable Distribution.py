@@ -31,6 +31,6 @@ variable_distribution	(df=df
 						,column='Fare'
 						,target='Survived'
 						,bins=10
-						,quantile=0.2 #What ratio of the distribution you want to remove 
+						,quantile=0.01 #What ratio of the distribution you want to remove 
 									  #eg. 5 removes the top and bottom 5%
 						)
